@@ -1,0 +1,230 @@
+bissexto:
+	locais 1 0
+	empilha_arg 0 1
+	empilha_arg 0 1
+	empilha 4
+	div
+	empilha 4
+	mult
+	sub
+	empilha 0
+	sigual i1		# ano % 4 == 0
+	salta f1
+i1:	empilha_arg 0 1
+	empilha_arg 0 1
+	empilha 100
+	div
+	empilha 100
+	mult
+	sub
+	empilha 0
+	sigual i2		# ano % 100 != 0
+	salta t2
+i2:	empilha_arg 0 1
+	empilha_arg 0 1
+	empilha 400
+	div
+	empilha 400
+	mult
+	sub
+	empilha 0
+	sigual t2		# ano % 400 == 0
+	empilha 0	# (ano % 100 != 0 || ano % 400 == 0) e' falso
+	salta e2
+t2:	empilha 1	# (ano % 100 != 0 || ano % 400 == 0) e' verdade
+e2:	empilha 0
+	sigual f1
+	empilha 1	# ano % 4 == 0 && (...) e' verdade
+	salta e1
+f1:	empilha 0	# ano % 4 == 0 && (...) e' verdade
+e1:	regressa
+
+dias_mes:
+	locais 2 0
+	empilha_arg 0 1
+	empilha 1
+	sigual case1	# mes == 1
+	empilha_arg 0 1
+	empilha 3
+	sigual case1	# mes == 3
+	empilha_arg 0 1
+	empilha 5
+	sigual case1	# mes == 5
+	empilha_arg 0 1
+	empilha 7
+	sigual case1	# mes == 7
+	empilha_arg 0 1
+	empilha 8
+	sigual case1	# mes == 8
+	empilha_arg 0 1
+	empilha 10
+	sigual case1	# mes == 10
+	empilha_arg 0 1
+	empilha 12
+	sigual case1	# mes == 12
+	salta prox1
+case1:	empilha 31
+	regressa		# return 31
+prox1:	empilha_arg 0 1
+	empilha 4
+	sigual case2	# mes == 4
+	empilha_arg 0 1
+	empilha 6
+	sigual case2	# mes == 6
+	empilha_arg 0 1
+	empilha 9
+	sigual case2	# mes == 9
+	empilha_arg 0 1
+	empilha 11
+	sigual case2	# mes == 11
+	salta prox2
+case2:	empilha 30
+	regressa		# return 30
+prox2:	empilha_arg 0 1
+	empilha 2
+	sigual case3	# mes == 2
+	salta fim
+case3:	empilha 28
+	empilha_arg 0 2
+	coloca_arg 1
+	chama 0 bissexto
+	soma
+	regressa		# return 28 + bissexto(ano)
+fim:	regressa
+
+dia_ano:
+	locais 3 0
+	chama -1 dias_ate	
+	empilha_arg 0 1
+	soma
+	regressa		# return dias_ate() + dia
+
+dias_ate:
+	locais 0 2
+	empilha 0
+	atribui_var 0 1	# dd = 0
+	empilha 1
+	atribui_var 0 2	# mm = 1
+for:	empilha_var 0 2
+	empilha_arg 1 2
+	smenor corpo	# mm < mes
+	salta sai
+corpo:	empilha_var 0 1
+	empilha_var 0 2
+	coloca_arg 1
+	empilha_arg 1 3
+	coloca_arg 2
+	chama 1 dias_mes
+	soma
+	atribui_var 0 1	# dd += dias_mes(mm, ano)
+	empilha_var 0 2
+	empilha 1
+	soma
+	atribui_var 0 2	# ++m
+	salta for
+sai:	empilha_var 0 1
+	regressa		# regressa dd
+
+nome:	locais 1 0
+	empilha_arg 0 1
+	empilha 1
+	sigual achou1
+	salta next1
+achou1:	escreve_str "Janeiro"
+	salta esac
+next1:	empilha_arg 0 1
+	empilha 2
+	sigual achou2
+	salta next2
+achou2:	escreve_str "Fevereiro"
+	salta esac
+next2:	empilha_arg 0 1
+	empilha 3
+	sigual achou3
+	salta next3
+achou3:	escreve_str "Marco"
+	salta esac
+next3:	empilha_arg 0 1
+	empilha 4
+	sigual achou4
+	salta next4
+achou4:	escreve_str "Abril"
+	salta esac
+next4:	empilha_arg 0 1
+	empilha 5
+	sigual achou5
+	salta next5
+achou5:	escreve_str "Maio"
+	salta esac
+next5:	empilha_arg 0 1
+	empilha 6
+	sigual achou6
+	salta next6
+achou6:	escreve_str "Junho"
+	salta esac
+next6:	empilha_arg 0 1
+	empilha 7
+	sigual achou7
+	salta next7
+achou7:	escreve_str "Julho"
+	salta esac
+next7:	empilha_arg 0 1
+	empilha 8
+	sigual achou8
+	salta next8
+achou8:	escreve_str "Agosto"
+	salta esac
+next8:	empilha_arg 0 1
+	empilha 9
+	sigual achou9
+	salta next9
+achou9:	escreve_str "Setembro"
+	salta esac
+next9:	empilha_arg 0 1
+	empilha 10
+	sigual achou10
+	salta next10
+achou10:escreve_str "Outubro"
+	salta esac
+next10:	empilha_arg 0 1
+	empilha 11
+	sigual achou11
+	salta next11
+achou11:escreve_str "Novembro"
+	salta esac
+next11:	empilha_arg 0 1
+	empilha 12
+	sigual achou12
+	salta esac
+achou12:escreve_str "Dezembro"
+esac:	regressa
+
+main:	locais 0 3
+	empilha 31
+	atribui_var 0 1	# dia = 31
+	empilha 12
+	atribui_var 0 2	# mes = 12
+	empilha 2004
+	atribui_var 0 3	# ano = 2004
+	escreve_str	"O dia "
+	empilha_var 0 1
+	escreve_int
+	escreve_str " de "
+	empilha_var 0 2
+	coloca_arg 1
+	chama -1 nome
+	escreve_str " de "
+	empilha_var 0 3
+	escreve_int
+	escreve_str " e' o "
+	empilha_var 0 1
+	coloca_arg 1
+	empilha_var 0 2
+	coloca_arg 2
+	empilha_var 0 3
+	coloca_arg 3
+	chama -1 dia_ano
+	escreve_int
+	escreve_str "-esimo dia do ano."
+	muda_linha
+	regressa

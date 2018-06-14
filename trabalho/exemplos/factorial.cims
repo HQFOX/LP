@@ -1,0 +1,27 @@
+main:	locais 0 0
+	empilha 12
+	coloca_arg 1
+	chama -1 fact	# calcula fact(12)
+	escreve_int		# e imprime
+	muda_linha
+	regressa
+
+fact:	locals 1 2
+	empilha 1
+	atribui_var 0 2	# f = 1
+	empilha 1
+	atribui_var 0 1	# i = 1
+L1:	empilha_arg 0 1
+	empilha_var 0 1
+	smenor L2		# n < i
+	empilha_var 0 2
+	empilha_var 0 1
+	mult
+	atribui_var 0 2	# f = f * i
+	empilha_var 0 1
+	empilha 1
+	soma
+	atribui_var 0 1	# i = i + 1
+	salta L1
+L2:	empilha_var 0 2
+	regressa		# regressa f

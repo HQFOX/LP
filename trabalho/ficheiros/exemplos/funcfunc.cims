@@ -1,0 +1,24 @@
+main:	locais 0 1
+	empilha 100000
+	atribui_var 0 1		# abc = 100000
+	empilha_var 0 1
+	coloca_arg 1
+	chama -1 func		# calcula func(abc)
+	coloca_arg 1
+	chama -1 func		# calcula func(func(abc))
+	escreve_int
+	muda_linha
+	escreve_str "abc = "
+	empilha_var 0 1
+	escreve_int
+	muda_linha
+	regressa
+func:	locais 1 0
+	empilha_var 1 1
+	empilha 1
+	soma
+	atribui_var 1 1		# ++abc
+	empilha 2
+	empilha_arg 0 1
+	mult
+	regressa			# regressa 2 * arg

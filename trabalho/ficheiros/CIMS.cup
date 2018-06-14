@@ -1,0 +1,91 @@
+import java_cup.runtime.*;
+
+action code {:
+  // cria uma instancia da maquina
+  CIMS maquina = new CIMS();
+:} ;
+
+parser code {:
+  Yylex lexer;
+
+  public void report_error(String message, Object error_info) {
+    Symbol info = (Symbol) error_info;
+
+    System.err.print("** " + message);
+    System.err.println(" at `" + info.value + "' in position " + info.left
+		       + " **");
+  }
+
+  public void report_fatal_error(String message, Object _) {
+    System.err.println("** " + message);
+  }
+:} ;
+
+init with {: lexer = new Yylex(System.in); :} ;
+
+scan with {: return lexer.yylex(); :} ;
+
+terminal        CHAMA, LOCAIS, REGRESSA, COLOCA_ARG ;
+terminal        EMPILHA_VAR, EMPILHA_ARG, EMPILHA, ATRIBUI_VAR, ATRIBUI_ARG ;
+terminal        SOMA, SUB, MULT, DIV, MOD, EXP ;
+terminal        SIGUAL, SMENOR, SALTA ;
+terminal        ESCREVE_INT, ESCREVE_STR, MUDA_LINHA ;
+terminal String IDENTIFICADOR ;
+terminal String	INTEIRO, STRING ;
+terminal        DOIS_PONTOS;
+terminal	ERRO ;
+
+non terminal CIMS programa ;
+non terminal      etiqueta, instrucao ;
+
+programa ::= programa etiqueta instrucao
+	       {: RESULT = maquina; :}
+         |
+	 ;
+etiqueta ::= IDENTIFICADOR:e DOIS_PONTOS
+		{: maquina.add_etiqueta(e,maquina.getMemoria().size()-1); :}
+	 |
+	 ;
+instrucao ::= CHAMA INTEIRO:d IDENTIFICADOR:p
+		{: maquina.add_instrucao(new Chama(Integer.parseInt(d),p)); :}
+	  |   LOCAIS INTEIRO:a INTEIRO:v
+		{: maquina.mem.add(new Locais(Integer.parseInt(a),Integer.parseInt(v))); :}
+	  |   REGRESSA
+	  {: maquina.mem.add(new Regressa()); :}
+	  |   COLOCA_ARG INTEIRO:n
+		{: maquina.mem.add(new ColocaArg(Integer.parseInt(n))); :}
+	  |   EMPILHA_VAR INTEIRO:d INTEIRO:n
+	    {: maquina.mem.add(new EmpilhaVar(Integer.parseInt(d) , Integer.parseInt(n))); :}
+	  |   EMPILHA_ARG INTEIRO:d INTEIRO:n
+	    {: maquina.mem.add(new EmpilhaArg(Integer.parseInt(d) , Integer.parseInt(n))); :}
+	  |   EMPILHA INTEIRO:i
+	    {: maquina.mem.add(new EmpilhaInt(Integer.parseInt(i))); :}
+	  |   ATRIBUI_VAR INTEIRO:d INTEIRO:n
+	    {: maquina.mem.add(new AtribuiVar(Integer.parseInt(d), Integer.parseInt(n))); :}
+	  |   ATRIBUI_ARG INTEIRO:d INTEIRO:n
+	  {: maquina.mem.add(new AtribuiArg(Integer.parseInt(d), Integer.parseInt(n))); :}
+	  |   SOMA
+		{: maquina.mem.add(new Soma()); :}
+	  |   SUB
+		{: maquina.mem.add(new Sub()); :}
+	  |   MULT
+		{: maquina.mem.add(new Mult()); :}
+	  |   DIV
+	    {: maquina.mem.add(new Div()); :}
+	  |   MOD
+	    {: maquina.mem.add(new Mod()); :}
+	  |   EXP
+	    {: maquina.mem.add(new Exp()); :}
+	  |   SIGUAL IDENTIFICADOR:e
+	    {: maquina.mem.add(new Sigual(e)); :}
+	  |   SMENOR IDENTIFICADOR:e
+	    {: maquina.mem.add(new Smenor(e)); :}
+	  |   SALTA IDENTIFICADOR:e
+	    {: maquina.mem.add(new Salta(e)); :}
+	  |   ESCREVE_INT
+	    {: maquina.mem.add(new EscreveInt()); :}
+	  |   ESCREVE_STR STRING:s
+	    {: maquina.mem.add(new EscreveStr(s)); :}
+	  |   MUDA_LINHA
+	    {: maquina.mem.add(new MudaLinha()); :}
+	  ;

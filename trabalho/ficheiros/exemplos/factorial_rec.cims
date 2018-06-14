@@ -1,0 +1,28 @@
+main:	locais 0 1
+	empilha 12
+	atribui_var 0 1	# a = 12
+	empilha_var 0 1
+	escreve_int
+	escreve_str "! = "
+	empilha_var 0 1
+	coloca_arg 1
+	chama -1 fact	# f(a)
+	escreve_int
+	muda_linha
+	regressa
+
+fact:	locais 1 0
+	empilha_arg 0 1
+	empilha 0
+	sigual L1		# n == 0
+	salta L2
+L1:	empilha 1
+	regressa
+L2:	empilha_arg 0 1
+	empilha_arg 0 1
+	empilha 1
+	sub		# n - 1
+	coloca_arg 1
+	chama 0 fact	# fact(n - 1)
+	mult		# n * fact(n - 1)
+	regressa

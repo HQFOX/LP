@@ -1,0 +1,4 @@
+correr ficheiros:
+make all
+java Main < exemplos/[nomeficheiro].cims
+make clean

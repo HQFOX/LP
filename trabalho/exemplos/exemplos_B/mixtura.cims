@@ -1,0 +1,21 @@
+main:	locais 0 0
+	chama -1 a
+	regressa
+a:	locais 0 1
+	empilha 127
+	atribui_var 0 1	# x = 127
+	chama -1 b
+	escreve_str "x = "
+	empilha_var 0 1
+	escreve_int
+	muda_linha
+	regressa
+b:	locais 0 0
+	chama 0 c
+	regressa
+c:	locais 0 0
+	empilha_var 1 1
+	empilha 2
+	mult
+	atribui_var 1 1	# x *= 2
+	regressa

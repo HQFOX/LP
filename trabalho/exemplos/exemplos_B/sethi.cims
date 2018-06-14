@@ -1,0 +1,48 @@
+main:	locals 0 1
+	empilha 0
+	atribui_var 0 1	# a = 0
+	chama -1 P
+	escreve_int
+	muda_linha
+	regressa
+
+P:	locals 0 3
+	empilha_var 1 1
+	empilha 0
+	sigual P_1		# a == 0
+	empilha 1
+	regressa		# regressa 1
+P_1:	chama -1 Q
+	atribui_var 0 1	# x = Q()
+	escreve_str "x = "
+	empilha_var 0 1
+	escreve_int
+	escreve_str ", y = "
+	empilha_var 0 2
+	escreve_int
+	escreve_str ", z = "
+	empilha_var 0 3
+	escreve_int
+	muda_linha
+	empilha 10
+	empilha_var 0 1
+	mult
+	regressa		# regressa 10 * x
+
+Q:	locals 0 0
+	chama -1 R
+	atribui_var 1 2	# y = R()
+	empilha 10
+	empilha_var 1 2
+	mult
+	regressa		# regressa 10 * y
+
+R:	locals 0 0
+	empilha 1
+	atribui_var 3 1	# a = 1
+	chama 2 P
+	atribui_var 2 3	# z = P()
+	empilha 10
+	empilha_var 2 3
+	mult
+	regressa		# regressa 10 * z

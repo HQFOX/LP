@@ -1,0 +1,33 @@
+void main()
+{
+  int n, m;
+  int mdc(int m, int n)
+  {
+    int t;
+    void mdci()
+    {
+      while (n != 0)
+	{
+	  t = m % n;
+	  m = n;
+	  n = t;
+	}
+    }
+
+    if (m < n)
+      {
+	t = m;
+	m = n;
+	n = t;
+      }
+
+    mdci();
+
+    return m;
+  }
+
+  m = 4232;
+  n = 3544;
+
+  println("O maior divisor comum entre ", n, " e ", m, " e' ", mdc(n,m));
+}

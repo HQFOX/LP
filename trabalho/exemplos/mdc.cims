@@ -1,0 +1,53 @@
+mdc:	locais 2 1
+	empilha_arg 0 1
+	empilha_arg 0 2
+	smenor L1		# m < n
+	salta L2
+L1:	empilha_arg 0 1
+	atribui_var 0 1	# t = m
+	empilha_arg 0 2
+	atribui_arg 0 1	# m = n
+	empilha_var 0 1
+	atribui_arg 0 2	# n = t
+L2:	chama -1 mdci	# mdci()
+	empilha_arg 0 1
+	regressa		# regressa m
+mdci:	locais 0 0
+L3:	empilha_arg 1 2
+	empilha 0
+	sigual L4		# n == 0
+	empilha_arg 1 1
+	empilha_arg 1 1
+	empilha_arg 1 2
+	div
+	empilha_arg 1 2
+	mult
+	sub
+	atribui_var 1 1	# t = m % n
+	empilha_arg 1 2
+	atribui_arg 1 1	# m = n
+	empilha_var 1 1
+	atribui_arg 1 2	# n = t
+	salta L3
+L4:	regressa
+
+main:	locais 0 2
+	empilha 3544
+	atribui_var 0 2	# n = 3544
+	empilha 4232
+	atribui_var 0 1	# m = 4232
+	escreve_str "O maior divisor comum entre "
+	empilha_var 0 2
+	escreve_int		# n
+	escreve_str " e "
+	empilha_var 0 1
+	escreve_int		# m
+	escreve_str " e' "
+	empilha_var 0 2
+	coloca_arg 1
+	empilha_var 0 1
+	coloca_arg 2
+	chama -1 mdc
+	escreve_int		# mdc(n, m)
+	muda_linha
+	regressa

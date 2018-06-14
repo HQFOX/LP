@@ -1,0 +1,46 @@
+main:	locais 0 2
+	empilha 25
+	atribui_var 0 1		# n = 25
+	empilha_var 0 1
+	coloca_arg 1
+	chama -1 fibonacci
+	atribui_var 0 2		# fib = fibonacci(n);
+	escreve_str "fibonacci("
+	empilha_var 0 1
+	escreve_int
+	escreve_str ") = "
+	empilha_var 0 2
+	escreve_int
+	muda_linha
+	empilha_var 0 2
+	empilha 121393
+	sigual L1			# fib != 121393
+	escreve_str "O que nao esta' certo, devia ter dado 121393"
+	muda_linha
+	salta L2
+L1:	escreve_str "O que esta' certo."
+	muda_linha
+L2:	regressa
+
+fibonacci:
+	locais 1 0
+	empilha_arg 0 1
+	empilha 0
+	sigual C1
+	empilha_arg 0 1
+	empilha 1
+	sigual C1
+	empilha_arg 0 1		# default:
+	empilha 1
+	sub
+	coloca_arg 1
+	chama 0 fibonacci	# fibonacci(x - 1)
+	empilha_arg 0 1
+	empilha 2
+	sub
+	coloca_arg 1
+	chama 0 fibonacci	# fibonacci(x - 2)
+	soma
+	regressa			# regressa fibonacci(x - 1) + fibonacci(x - 2)
+C1:	empilha 1
+	regressa			# regressa 1

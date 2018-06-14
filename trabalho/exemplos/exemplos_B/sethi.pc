@@ -1,0 +1,44 @@
+/*
+  Inspirado por um exercício do livro
+
+  Ravi Sethi, "Programming Languages: Concepts and Constructs, 2nd
+  Edition". Addison Wesley, 1996.
+*/
+
+void main()
+{
+  int a = 0;
+
+  int P()
+  {
+    int x, y, z;
+
+    int Q()
+    {
+      int R()
+      {
+	a = 1;
+	z = P();
+
+	return 10 * z;
+      }
+
+      y = R();
+
+      return 10 * y;
+    }
+
+    if (a == 0)
+      {
+	x = Q();
+
+	println("x = ", x, ", y = ", y, ", z = ", z);
+
+	return 10 * x;
+      }
+    else
+      return 1;
+  }
+
+  println(P());
+}
